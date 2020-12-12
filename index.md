@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Amin
 
 You can use the [editor on GitHub](https://github.com/litamin/aminwebsite/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
