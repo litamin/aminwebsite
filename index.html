@@ -71,8 +71,7 @@
   @keyframes sweepF{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-1.6deg)} }
 
   .source-dot{
-    fill: var(--paper);
-    filter: drop-shadow(0 0 10px rgba(242,241,237,.9));
+    filter: drop-shadow(0 0 16px rgba(242,241,237,.55));
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -168,6 +167,7 @@
     .stage{ align-items:center; }
     main{
       padding: 1.75rem;
+      transform: translateY(-8vh);
     }
   }
 </style>
@@ -176,8 +176,14 @@
 
 <div class="stage">
 
-  <svg class="beams" viewBox="0 0 1200 700" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+  <svg class="beams" viewBox="0 0 1200 700" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
     <defs>
+      <radialGradient id="sourceGlow">
+        <stop offset="0%"   stop-color="#f2f1ed" stop-opacity="1"/>
+        <stop offset="35%"  stop-color="#f2f1ed" stop-opacity=".9"/>
+        <stop offset="70%"  stop-color="#f2f1ed" stop-opacity=".3"/>
+        <stop offset="100%" stop-color="#f2f1ed" stop-opacity="0"/>
+      </radialGradient>
       <linearGradient id="gradA" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="60" y2="560">
         <stop offset="0%"  stop-color="#ff3b4e" stop-opacity="1"/>
         <stop offset="55%" stop-color="#ff3b4e" stop-opacity="1"/>
@@ -215,7 +221,7 @@
     <line class="beam beam-d" x1="1120" y1="650" x2="280" y2="10" stroke="url(#gradD)"/>
     <line class="beam beam-e" x1="1120" y1="650" x2="620" y2="10" stroke="url(#gradE)"/>
     <line class="beam beam-f" x1="1120" y1="650" x2="900" y2="20" stroke="url(#gradF)"/>
-    <circle class="source-dot" cx="1120" cy="650" r="12"/>
+    <circle class="source-dot" cx="1120" cy="650" r="36" fill="url(#sourceGlow)"/>
   </svg>
 
   <div class="veil"></div>
