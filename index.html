@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amin Shahsavar — Lighting &amp; Generative Visual Systems</title>
+<meta name="description" content="Amin Shahsavar — lighting design and generative visual systems for live performance. Based in Berlin.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --stage: #08090d;
+    --paper: #f2f1ed;
+    --beam-red: #ff3b4e;
+    --beam-green: #3cff8e;
+    --beam-blue: #29d2ff;
+    --beam-magenta: #e93af5;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    min-height:100%;
+    background: var(--stage);
+    color: var(--paper);
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .stage{
+    position:relative;
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+  }
+
+  /* --- beam field ---------------------------------------------------- */
+
+  .beams{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:0;
+  }
+
+  .beam{
+    stroke-width:8;
+    stroke-linecap:round;
+    fill:none;
+    opacity:.75;
+    transform-box: fill-box;
+    transform-origin: 100% 100%;
+  }
+  .beam-a{ animation: sweepA 22s ease-in-out infinite; }
+  .beam-b{ animation: sweepB 26s ease-in-out infinite; }
+  .beam-c{ animation: sweepC 19s ease-in-out infinite; }
+  .beam-d{ animation: sweepD 24s ease-in-out infinite; }
+  .beam-e{ animation: sweepE 30s ease-in-out infinite; }
+  .beam-f{ animation: sweepF 17s ease-in-out infinite; }
+
+  @keyframes sweepA{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(2.4deg)} }
+  @keyframes sweepB{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-3.1deg)} }
+  @keyframes sweepC{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(1.8deg)} }
+  @keyframes sweepD{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-2deg)} }
+  @keyframes sweepE{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(3.4deg)} }
+  @keyframes sweepF{ 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-1.6deg)} }
+
+  .source-dot{
+    fill: var(--paper);
+    filter: drop-shadow(0 0 10px rgba(242,241,237,.9));
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .beam{ animation: none; }
+  }
+
+  /* --- readability veil ----------------------------------------------- */
+
+  .veil{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background: linear-gradient(115deg,
+      rgba(8,9,13,.95) 0%,
+      rgba(8,9,13,.88) 28%,
+      rgba(8,9,13,.4) 58%,
+      rgba(8,9,13,0) 78%);
+  }
+
+  /* --- content ---------------------------------------------------------*/
+
+  main{
+    position:relative;
+    z-index:2;
+    padding: clamp(1.75rem, 6vw, 6rem);
+    padding-bottom: clamp(3rem, 8vw, 7rem);
+    max-width: 46rem;
+  }
+
+  h1{
+    margin:0 0 1.25rem;
+    font-family: "Fraunces", serif;
+    font-optical-sizing: auto;
+    font-weight:600;
+    font-size: clamp(2.75rem, 9vw, 6rem);
+    line-height:.95;
+    letter-spacing:-0.01em;
+  }
+
+  .tagline{
+    margin:0 0 1.5rem;
+    font-weight:500;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    max-width:32ch;
+    color: var(--paper);
+  }
+
+  .bio{
+    margin:0 0 2.25rem;
+    font-weight:400;
+    font-size:1rem;
+    line-height:1.65;
+    max-width:58ch;
+    color: rgba(242,241,237,.78);
+  }
+
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:.65rem;
+    padding:.85rem 1.5rem;
+    border:1px solid rgba(242,241,237,.35);
+    border-radius:999px;
+    color: var(--paper);
+    font-weight:600;
+    font-size:.95rem;
+    text-decoration:none;
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .cta:hover{
+    border-color: rgba(242,241,237,.75);
+    background: rgba(242,241,237,.07);
+  }
+  .cta:focus-visible{
+    outline: 2px solid var(--paper);
+    outline-offset: 4px;
+  }
+
+  .cta .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background: var(--beam-green);
+    box-shadow: 0 0 8px var(--beam-green);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .cta .dot{ animation: pulse 2.2s ease-in-out infinite; }
+  }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  @media (max-width: 480px){
+    main{ padding-bottom: 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <svg class="beams" viewBox="0 0 1200 700" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+    <defs>
+      <linearGradient id="gradA" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="60" y2="560">
+        <stop offset="0%"  stop-color="#ff3b4e" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#ff3b4e" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#ff3b4e" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gradB" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="10" y2="380">
+        <stop offset="0%"  stop-color="#3cff8e" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#3cff8e" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#3cff8e" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gradC" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="40" y2="140">
+        <stop offset="0%"  stop-color="#29d2ff" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#29d2ff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#29d2ff" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gradD" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="280" y2="10">
+        <stop offset="0%"  stop-color="#e93af5" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#e93af5" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#e93af5" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gradE" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="620" y2="10">
+        <stop offset="0%"  stop-color="#3cff8e" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#3cff8e" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#3cff8e" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gradF" gradientUnits="userSpaceOnUse" x1="1120" y1="650" x2="900" y2="20">
+        <stop offset="0%"  stop-color="#29d2ff" stop-opacity="1"/>
+        <stop offset="55%" stop-color="#29d2ff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#29d2ff" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <line class="beam beam-a" x1="1120" y1="650" x2="60"  y2="560" stroke="url(#gradA)"/>
+    <line class="beam beam-b" x1="1120" y1="650" x2="10"  y2="380" stroke="url(#gradB)"/>
+    <line class="beam beam-c" x1="1120" y1="650" x2="40"  y2="140" stroke="url(#gradC)"/>
+    <line class="beam beam-d" x1="1120" y1="650" x2="280" y2="10" stroke="url(#gradD)"/>
+    <line class="beam beam-e" x1="1120" y1="650" x2="620" y2="10" stroke="url(#gradE)"/>
+    <line class="beam beam-f" x1="1120" y1="650" x2="900" y2="20" stroke="url(#gradF)"/>
+    <circle class="source-dot" cx="1120" cy="650" r="12"/>
+  </svg>
+
+  <div class="veil"></div>
+
+  <!-- Edit your name, tagline, bio, and the Google Photos link below -->
+  <main>
+    <h1>Amin<br>Shahsavar</h1>
+
+    <p class="tagline">Lighting design and generative visual systems for live performance.</p>
+
+    <p class="bio">
+      I build lighting and visual systems for live performance — from a
+      108-head laser rig running in TouchDesigner to the light and fog for
+      a Sufi-inspired dance-music piece staged at Deutsche Oper Berlin.
+      Based in Berlin, working across installation, live shows, and
+      anything that needs light to move in real time.
+    </p>
+
+    <a class="cta" href="https://photos.app.goo.gl/6Vu8tiw7rwTjR8eKA" target="_blank" rel="noopener">
+      <span class="dot"></span>
+      View the portfolio
+    </a>
+  </main>
+
+</div>
+
+</body>
+</html>
